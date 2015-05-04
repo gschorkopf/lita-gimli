@@ -11,5 +11,12 @@ describe Lita::Handlers::Gimli, lita_handler: true do
         expect(replies.last).to eq("AND MY AXE!")
       end
     end
+
+    context "no foos have been contributed" do
+      it "does nothing" do
+        send_message "share the load, frodo"
+        expect(replies.last).to be_nil
+      end
+    end
   end
 end

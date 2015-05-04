@@ -4,7 +4,13 @@ module Lita
       route %r{(.+)}, :log
 
       def log(response)
-        response.reply("AND MY AXE!")
+        if needs_an_axe?(response)
+          response.reply("AND MY AXE!")
+        end
+      end
+
+      def needs_an_axe?(response)
+        response.message.body.split(' ').first == "AND"
       end
     end
 
