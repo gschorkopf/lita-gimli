@@ -1,8 +1,8 @@
 module Lita
   module Handlers
     class Gimli < Handler
-      class Buffer
-        MAX_BUFFER_LENGTH = 2
+      class Fellowship
+        BOROMIR_AND_LEGOLAS_COUNT = 2
         attr_reader :messages
 
         def log(message)
@@ -17,44 +17,44 @@ module Lita
         def needs_an_axe?
           messages.all? do |message|
             message.body.split(' ').first.upcase == "AND"
-          end && messages.length == MAX_BUFFER_LENGTH
+          end && messages.length == BOROMIR_AND_LEGOLAS_COUNT
         end
 
         private
 
         def truncate
-          if @messages.size > MAX_BUFFER_LENGTH
-            @messages = messages[-MAX_BUFFER_LENGTH..-1]
+          if @messages.size > BOROMIR_AND_LEGOLAS_COUNT
+            @messages = messages[-BOROMIR_AND_LEGOLAS_COUNT..-1]
           end
         end
       end
 
-      class BufferRepository
-        def self.buffers
-          @buffers ||= {}
+      class FellowshipRepository
+        def self.fellowships
+          @fellowships ||= {}
         end
 
-        def self.buffer_for_room(room)
-          buffers[room] ||= Buffer.new
+        def self.fellowship_for_room(room)
+          fellowships[room] ||= Fellowship.new
         end
       end
 
       route %r{(.+)}, :contribute_an_axe
 
       def contribute_an_axe(response)
-        buffer = get_buffer(response)
-        buffer.log(response.message)
+        fellowship = get_fellowship(response)
+        fellowship.log(response.message)
 
-        if buffer.needs_an_axe?
+        if fellowship.needs_an_axe?
           response.reply("AND MY AXE!")
         end
       end
 
       private
 
-      def get_buffer(response)
+      def get_fellowship(response)
         room = response.message.source.room
-        BufferRepository.buffer_for_room(room)
+        FellowshipRepository.fellowship_for_room(room)
       end
     end
 
