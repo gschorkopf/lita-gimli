@@ -12,9 +12,11 @@ gem "lita-gimli"
 
 ## Usage
 
+```
 geoffrey: and you'll have my sword...
 killpack: and my bow!
 Lita: AND MY AXE!
+```
 
 ## License
 
