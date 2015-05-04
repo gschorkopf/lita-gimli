@@ -39,9 +39,9 @@ module Lita
         end
       end
 
-      route %r{(.+)}, :log
+      route %r{(.+)}, :contribute_an_axe
 
-      def log(response)
+      def contribute_an_axe(response)
         buffer = get_buffer(response)
         buffer.log(response.message)
 

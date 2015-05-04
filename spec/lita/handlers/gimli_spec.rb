@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Lita::Handlers::Gimli, lita_handler: true do
-  it { is_expected.to route("Anything").to(:log) }
+  it { is_expected.to route("Anything").to(:contribute_an_axe) }
 
   describe "#contribute_an_axe" do
     context "two foos have been contributed" do
