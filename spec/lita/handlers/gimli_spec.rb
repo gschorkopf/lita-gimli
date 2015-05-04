@@ -10,6 +10,14 @@ describe Lita::Handlers::Gimli, lita_handler: true do
         send_message "AND my bow!"
         expect(replies.last).to eq("AND MY AXE!")
       end
+
+      context "foos are case insensitive" do
+        it "contributes an axe" do
+          send_message "and you'll have my sword..."
+          send_message "AnD my bow!"
+          expect(replies.last).to eq("AND MY AXE!")
+        end
+      end
     end
 
     context "no foos have been contributed" do

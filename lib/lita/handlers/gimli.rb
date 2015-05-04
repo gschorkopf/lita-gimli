@@ -48,7 +48,7 @@ module Lita
 
       def need_an_axe?(messages)
         messages.all? do |message|
-          message.body.split(' ').first == "AND"
+          message.body.split(' ').first.upcase == "AND"
         end && messages.length == Buffer::MAX_BUFFER_LENGTH
       end
 
