@@ -21,3 +21,5 @@ Lita: AND MY AXE!
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
+
+Shoutout to the reddit [Gimli bot](https://www.reddit.com/user/GimliBot) for inspiration.
