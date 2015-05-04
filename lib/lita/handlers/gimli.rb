@@ -14,6 +14,12 @@ module Lita
           @messages ||= []
         end
 
+        def needs_an_axe?
+          messages.all? do |message|
+            message.body.split(' ').first.upcase == "AND"
+          end && messages.length == MAX_BUFFER_LENGTH
+        end
+
         private
 
         def truncate
@@ -39,18 +45,12 @@ module Lita
         buffer = get_buffer(response)
         buffer.log(response.message)
 
-        if need_an_axe?(buffer.messages)
+        if buffer.needs_an_axe?
           response.reply("AND MY AXE!")
         end
       end
 
       private
-
-      def need_an_axe?(messages)
-        messages.all? do |message|
-          message.body.split(' ').first.upcase == "AND"
-        end && messages.length == Buffer::MAX_BUFFER_LENGTH
-      end
 
       def get_buffer(response)
         room = response.message.source.room
