@@ -1,16 +1,60 @@
 module Lita
   module Handlers
     class Gimli < Handler
+      class Buffer
+        MAX_BUFFER_LENGTH = 2
+        attr_reader :messages
+
+        def log(message)
+          messages << message
+          truncate
+        end
+
+        def messages
+          @messages ||= []
+        end
+
+        private
+
+        def truncate
+          if @messages.size > MAX_BUFFER_LENGTH
+            @messages = messages[-MAX_BUFFER_LENGTH..-1]
+          end
+        end
+      end
+
+      class BufferRepository
+        def self.buffers
+          @buffers ||= {}
+        end
+
+        def self.buffer_for_room(room)
+          buffers[room] ||= Buffer.new
+        end
+      end
+
       route %r{(.+)}, :log
 
       def log(response)
-        if needs_an_axe?(response)
+        buffer = get_buffer(response)
+        buffer.log(response.message)
+
+        if need_an_axe?(buffer.messages)
           response.reply("AND MY AXE!")
         end
       end
 
-      def needs_an_axe?(response)
-        response.message.body.split(' ').first == "AND"
+      private
+
+      def need_an_axe?(messages)
+        messages.all? do |message|
+          message.body.split(' ').first == "AND"
+        end && messages.length == Buffer::MAX_BUFFER_LENGTH
+      end
+
+      def get_buffer(response)
+        room = response.message.source.room
+        BufferRepository.buffer_for_room(room)
       end
     end
 
