@@ -4,6 +4,7 @@ module Lita
       route %r{(.+)}, :log
 
       def log(response)
+        response.reply("AND MY AXE!")
       end
     end
 
