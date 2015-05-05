@@ -2,7 +2,7 @@ module Lita
   module Handlers
     class Gimli < Handler
       class Fellowship
-        BOROMIR_AND_LEGOLAS_COUNT = 2
+        ARAGORN_AND_LEGOLAS_COUNT = 2
         attr_accessor :messages
 
         def log(message)
@@ -17,14 +17,14 @@ module Lita
         def needs_an_axe?
           messages.all? do |message|
             message.body.split(' ').first.upcase == "AND"
-          end && messages.length == BOROMIR_AND_LEGOLAS_COUNT
+          end && messages.length == ARAGORN_AND_LEGOLAS_COUNT
         end
 
         private
 
         def truncate
-          if @messages.size > BOROMIR_AND_LEGOLAS_COUNT
-            @messages = messages[-BOROMIR_AND_LEGOLAS_COUNT..-1]
+          if @messages.size > ARAGORN_AND_LEGOLAS_COUNT
+            @messages = messages[-ARAGORN_AND_LEGOLAS_COUNT..-1]
           end
         end
       end
