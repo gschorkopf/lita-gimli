@@ -3,7 +3,7 @@ module Lita
     class Gimli < Handler
       class Fellowship
         BOROMIR_AND_LEGOLAS_COUNT = 2
-        attr_reader :messages
+        attr_accessor :messages
 
         def log(message)
           messages << message
@@ -47,6 +47,7 @@ module Lita
 
         if fellowship.needs_an_axe?
           response.reply("AND MY AXE!")
+          fellowship.messages = []
         end
       end
 

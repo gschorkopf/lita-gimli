@@ -11,6 +11,20 @@ describe Lita::Handlers::Gimli, lita_handler: true do
         expect(replies.last).to eq("AND MY AXE!")
       end
 
+      context "another fellowship member contributes after Gimli pipes in" do
+        it "Gimli only contributes one axe" do
+          send_message "AND you'll have my sword..."
+
+          expect{
+            send_message "AND my bow!"
+          }.to change(replies, :count).by 1
+
+          expect {
+            send_message "AND also some other weapon!"
+          }.to_not change(replies, :count)
+        end
+      end
+
       context "fellowship member messages are case insensitive" do
         it "contributes an axe" do
           send_message "and you'll have my sword..."
